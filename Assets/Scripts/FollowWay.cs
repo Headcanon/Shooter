@@ -4,15 +4,36 @@ using UnityEngine;
 
 public class FollowWay : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public GameObject wayfather;
+    Transform[] ways;
+    public int index = 1;
+    public float vel = 10;
+
+    Vector3 oldpos;
+    Quaternion oldrot;
+
     void Start()
     {
-        
+        //Pega todos os pontos do caminho
+        ways = wayfather.GetComponentsInChildren<Transform>();
+        oldpos = transform.position;
+        oldrot = transform.rotation;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        //Move o conductor na dirção do próximo ponto
+        transform.position = Vector3.MoveTowards(transform.position, ways[index].transform.position, Time.deltaTime * vel);
+        Vector3 direction = ways[index].transform.position - transform.position;
+
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(direction), Time.deltaTime);
+
+        //Verifica se alcançou o próximo ponto e reinicia o processo
+        if(Vector3.Distance(transform.position, ways[index].transform.position) < 1)
+        {
+            index++;
+            oldpos = transform.position;
+            oldrot = transform.rotation;
+        }
     }
 }
