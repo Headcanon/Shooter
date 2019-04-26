@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class FollowWay : MonoBehaviour
 {
+    public GameManager gm;
+
     public GameObject wayfather;
     Transform[] ways;
     public int index = 1;
@@ -22,18 +24,25 @@ public class FollowWay : MonoBehaviour
 
     void Update()
     {
-        //Move o conductor na dirção do próximo ponto
-        transform.position = Vector3.MoveTowards(transform.position, ways[index].transform.position, Time.deltaTime * vel);
-        Vector3 direction = ways[index].transform.position - transform.position;
-
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(direction), Time.deltaTime);
-
-        //Verifica se alcançou o próximo ponto e reinicia o processo
-        if(Vector3.Distance(transform.position, ways[index].transform.position) < 1)
+        if (index < ways.Length)
         {
-            index++;
-            oldpos = transform.position;
-            oldrot = transform.rotation;
+            //Move o conductor na dirção do próximo ponto
+            transform.position = Vector3.MoveTowards(transform.position, ways[index].transform.position, Time.deltaTime * vel);
+            Vector3 direction = ways[index].transform.position - transform.position;
+
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(direction), Time.deltaTime);
+
+            //Verifica se alcançou o próximo ponto e reinicia o processo
+            if (Vector3.Distance(transform.position, ways[index].transform.position) < 1)
+            {
+                index++;
+                oldpos = transform.position;
+                oldrot = transform.rotation;
+            }
+        }
+        else
+        {
+            gm.CompleteLevel();
         }
     }
 }
