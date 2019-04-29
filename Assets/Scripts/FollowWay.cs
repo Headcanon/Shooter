@@ -14,6 +14,8 @@ public class FollowWay : MonoBehaviour
     Vector3 oldpos;
     Quaternion oldrot;
 
+    public bool follow = true;
+
     void Start()
     {
         //Pega todos os pontos do caminho
@@ -24,7 +26,7 @@ public class FollowWay : MonoBehaviour
 
     void Update()
     {
-        if (index < ways.Length)
+        if (index < ways.Length && follow)
         {
             //Move o conductor na dirção do próximo ponto
             transform.position = Vector3.MoveTowards(transform.position, ways[index].transform.position, Time.deltaTime * vel);
@@ -40,7 +42,11 @@ public class FollowWay : MonoBehaviour
                 oldrot = transform.rotation;
             }
         }
-        else
+        else if(gameObject.tag == "Enemy")
+        {
+            index = 0;
+        }
+        else if (gameObject.tag == "Conductor")
         {
             gm.CompleteLevel();
         }

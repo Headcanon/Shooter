@@ -8,6 +8,7 @@ public class Camerafocus : MonoBehaviour
 
     void Update()
     {
+        if(target != null)
         transform.LookAt(target.transform);
     }
 }

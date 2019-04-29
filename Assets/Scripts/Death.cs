@@ -8,7 +8,8 @@ public class Death : MonoBehaviour
 
     private void OnParticleCollision(GameObject other)
     {
-        gm.Lose();
+        if (gameObject.tag == "Player") { gm.Lose(); }
         Destroy(gameObject);
     }
+    
 }
