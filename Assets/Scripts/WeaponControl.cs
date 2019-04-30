@@ -12,7 +12,7 @@ public class WeaponControl : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
         {
             fireweapon.Emit(1);
-            //source.Play();
+            source.Play();
         }
     }
 }

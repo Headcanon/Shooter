@@ -42,13 +42,13 @@ public class FollowWay : MonoBehaviour
                 oldrot = transform.rotation;
             }
         }
-        else if(gameObject.tag == "Enemy")
-        {
-            index = 0;
-        }
         else if (gameObject.tag == "Conductor")
         {
             gm.CompleteLevel();
+        }
+        else
+        {
+            index = 0;
         }
     }
 }
